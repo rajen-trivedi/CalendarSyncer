@@ -5,7 +5,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
 import com.rajen.calendarsyncer.databinding.ActivityMainBinding
+import java.io.InputStreamReader
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +28,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ActivityMainBinding.initView() {
-        upcomingAdapter = UpcomingAdapter(this@MainActivity, mutableListOf())
+        upcomingAdapter = UpcomingAdapter(mutableListOf())
         rvCalendarList.adapter = upcomingAdapter
+        loadJsonData()
+    }
+
+    private fun loadJsonData() {
+        val inputStream = resources.openRawResource(R.raw.appointments)
+        val reader = InputStreamReader(inputStream)
+        val jsonData = Gson().fromJson(reader, AppointmentResponse::class.java)
+        reader.close()
+
+        upcomingAdapter.updateData(jsonData.results)
     }
 }

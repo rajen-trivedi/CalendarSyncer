@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.google.api.client.android)
     implementation(libs.listenablefuture) //Used for resolve Task :app:checkDebugDuplicateClasses FAILED
+
+    implementation(libs.gson)
 }
